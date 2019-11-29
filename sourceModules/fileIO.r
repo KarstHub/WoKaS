@@ -11,7 +11,9 @@ fileIO.timeFormat <- "%d.%m.%Y"
 
 basePath ='./'
 
-fileIO.destDir <- paste0(basePath,'data')
+dir.create(paste0(basePath, "WoKaS_Dynamic_Datasets"))
+
+fileIO.destDir <- paste0(basePath,'WoKaS_Dynamic_Datasets')
 
 fileIO.writeSpringData <- function(data, metaData, filename=NULL,  destDir = fileIO.destDir){
 	
