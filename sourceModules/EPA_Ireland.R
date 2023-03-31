@@ -22,7 +22,7 @@ source(paste0(sourceModule,'fileIO.R'))
 ##    Get springs metadata, url links and download datasets   ==
 ##==============================================================
 # url link for all monitoring stations meta information
-metaUrl <- "http://www.epa.ie/Hydronet/output/internet/layers/20/index.json"
+metaUrl <- "https://epawebapp.epa.ie/hydronet/output/internet/layers/20/index.json"
 
 # Transform information from JSON to data frame
 data.df <- data.frame(fromJSON(metaUrl))
@@ -35,7 +35,7 @@ meta <- c("metadata_station_name","metadata_station_no","metadata_station_id" ,"
 springs_meta <- subset(springs, select = meta)
 
 # link containing the href string for downoading dataset
-x_links <- "http://www.epa.ie/Hydronet/output/internet/stations/index.json"
+x_links <- "https://epawebapp.epa.ie/hydronet/output/internet/stations/index.json"
 links.df <- data.frame(fromJSON(x_links))
 
 # get all "href" links for all meta stations
@@ -54,7 +54,7 @@ staNum <- springs_meta$metadata_station_no
 staNam <- springs_meta$metadata_station_name
 
 # get data download link for all meta stations using the extracted href
-dUrls <- sprintf("http://www.epa.ie/Hydronet/output/internet/stations/%s/%s/Q/complete_15min.zip", href, staNum)
+dUrls <- sprintf("http://epawebapp.epa.ie/hydronet/output/internet/stations/%s/%s/Q/complete_15min.zip", href, staNum)
 
 # create directory to downlaod ".zip" files
 outfolder <- paste0(basePath,"tmp_EPA")
