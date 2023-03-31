@@ -36,7 +36,7 @@ for(i in 1:nrow(stationInfo)){
 	dlReqUrl <- "https://www.gkd.bayern.de/de/downloadcenter/enqueue_download" 
 	
 	# url needed for the data download
-	dlBaseUrl <- "https://www.gkd.bayern.de/de/downloadcenter/download?token="
+	dlBaseUrl <- "https://www.gkd.bayern.de/de/downloadcenter/add_download"
 	content_type = "application/x-www-form-urlencoded; charset=UTF-8"
 	body = list(zr="gesamt",begin="01.07.2018",email="",ende="23.07.2018",wertart="tmw",f="",
 				t=sprintf('{"%s":["grundwasser.quelle"]}',selectedId))
@@ -52,9 +52,10 @@ for(i in 1:nrow(stationInfo)){
 	
 	# extract deep link from the servers response to the POST
 	dlDeeplink <- gsub('"}?','',strsplit(content(r,'text'),'deeplink":')[[1]][2])
+	dlDeeplink2 <- gsub('\\\\','\\', dlDeeplink)
 	
 	# paste the download link together
-	dlUrl <- paste0(dlBaseUrl, dlDeeplink) 	
+	dlUrl <- dlDeeplink2
 
 	# send a http GET until the response page contains a link which can be identified by '>hier</a>'
 	cat("wait for download")
@@ -125,13 +126,13 @@ for(i in 1:nrow(stationInfo)){
 		# extract coordinates from file
 		if (class(dat) != "try-error"){
 		  
-		  coord_skip <- grep('Rechtswert',readLines(tmpFileCsv))
+		  coord_skip <- grep('Ostwert',readLines(tmpFileCsv))
 		  
 		  if(coord_skip==0){
 		    WGS84 <- data.frame(lon_GK=NA,lat_GK=NA)
-		  
-		    }else{
-		    coord <- read.csv(tmpFileCsv, header=F, sep=';', skip=coord_skip-1, nrows=1, col.names=c('lon','lat','projection'), colClasses=c('character','character','character'))
+		    
+		  }else{
+		    coord <- read.csv(tmpFileCsv, header=F, sep=';', skip=coord_skip-1, nrows=1, col.names=c('long_name','lon','lat_name','lat','projection'), colClasses=c('character','character','character'))
 		    
 		    # get coordinate in EPSG 31468 projection
 		    lon <- as.numeric(gsub('[^0-9.]','',coord$lon)); lat <- as.numeric(gsub('[^0-9.]','',coord$lat))
@@ -156,7 +157,7 @@ for(i in 1:nrow(stationInfo)){
 		springData <- rbind(springData, dat)
 		
 	}
-	file.remove(tmpFileArchive) # remove the temporary zip archive csv file
+	# file.remove(tmpFileArchive) # remove the temporary zip archive csv file
 	
 	cat(" -> write file")
 	
