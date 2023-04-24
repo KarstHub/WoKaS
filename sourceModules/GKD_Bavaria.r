@@ -157,7 +157,7 @@ for(i in 1:nrow(stationInfo)){
 		springData <- rbind(springData, dat)
 		
 	}
-	file.remove(tmpFileArchive) # remove the temporary zip archive csv file
+	# file.remove(tmpFileArchive) # remove the temporary zip archive csv file
 	
 	cat(" -> write file")
 	
