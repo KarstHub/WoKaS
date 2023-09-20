@@ -60,12 +60,16 @@ dataFiles <- list.files(outfolder, pattern = '.csv')
 # for every csv file in baseFile dir
 for(i in 1:length(dataFiles)){
   
+  cat('reading file:', dataFiles[i], '\n')
+  
+  #TODO: at time empty file is downloaded, quick fix done
   skip_no <- grep("Werte:",readLines(paste0(outfolder, "/", dataFiles[i])))
-  if(skip_no==0)
+  if(skip_no==0 || length(skip_no)==0)
     next
   
   #read csv file
-  springData <- read.csv(paste0(outfolder, "/", dataFiles[i]), sep = ";", header = F, dec = ',', stringsAsFactors = F, skip = skip_no, col.names = c("date", "discharge"))
+  #TODO: at times a third column appears in the middle of the raw dowmloaded data, quick fix done atm
+  springData <- read.csv(paste0(outfolder, "/", dataFiles[i]), sep = ";", header = F, dec = ',', stringsAsFactors = F, skip = skip_no, col.names = c("date", "discharge", "", ""))
   
   # select, rename and convert discharge observations to m3/s
   springData$discharge <- as.numeric(gsub(",",".",springData$discharge)) * 0.001

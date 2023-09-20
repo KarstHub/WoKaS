@@ -21,6 +21,17 @@ fileIO.packageRequire('rgdal')
 fileIO.packageRequire('jsonlite')
 fileIO.packageRequire('curl')
 fileIO.packageRequire('pdftools')
+
+
+#TODO: quick fixes/update libraries
+install.packages("remotes")
+remotes::install_github("omegahat/RHTMLForms")
+
+if("readr" %in% rownames(installed.packages()) == FALSE){
+  install.packages('readr', repos='https://cran.r-project.org/')}
+
+# hot fix ends-----
+
 if("RHTMLForms" %in% rownames(installed.packages()) == FALSE) {install.packages(paste0(sourceModule,"RHTMLForms_0.6-0.tar.gz"), repos = NULL, type = "source")}
 
 
@@ -30,4 +41,4 @@ if("RHTMLForms" %in% rownames(installed.packages()) == FALSE) {install.packages(
 # list of country names download is possible: Germany, France, Austria, Ireland, Slovenia, US, UK
 
 # download datasets
-fileIO.runDownload()
+fileIO.runDownload(country="France")

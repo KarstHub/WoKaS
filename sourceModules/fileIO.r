@@ -55,7 +55,7 @@ Slovenia = "arso_Slovenia.R"
 US = "USGS.R"
 UK = "NRFA_UK.R"
 
-fileIO.runDownload <- function(country = NULL, dataSource){
+fileIO.runDownload <- function(country = NULL){
   
   if(is.null(country)){
     dataSource = fileIO.sources
@@ -63,8 +63,39 @@ fileIO.runDownload <- function(country = NULL, dataSource){
       cat(sprintf("-> processing data from %s \n", unlist(strsplit(dataSource[i], "[.]"))[1]))
       source(paste0(sourceModule, dataSource[i]))
     }
+    
   }else{
-    dataSource = country
+    
+    if(country == "Germany"){
+      dataSource = c("GKD_Bavaria.r","UDO_Baden.R")
+    }
+    
+    if(country == "France"){
+      dataSource = "EAUFrance.R"
+    }
+    
+    if(country == "Austria"){
+      dataSource = "eHYD_Austria.R"
+    }
+    
+    if(country == "Ireland"){
+      dataSource = "EPA_Ireland.R"
+    }
+    
+    if(country == "Slovenia"){
+      dataSource = "arso_Slovenia.R"
+    }
+    
+    if(country == "US"){
+      dataSource = "USGS.R"
+    }
+    
+    if(country == "UK"){
+      dataSource = "NRFA_UK.R"
+    }
+    
+    # dataSource = country
+    print(dataSource)
     for(i in 1:length(dataSource)){
       cat(sprintf("-> processing data from %s \n", unlist(strsplit(dataSource[i], "[.]"))[1]))
       source(paste0(sourceModule, dataSource[i]))
