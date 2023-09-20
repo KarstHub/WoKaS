@@ -20,6 +20,7 @@ fileIO.packageRequire('httr')
 fileIO.packageRequire('rgdal')
 fileIO.packageRequire('jsonlite')
 fileIO.packageRequire('curl')
+fileIO.packageRequire('pdftools')
 if("RHTMLForms" %in% rownames(installed.packages()) == FALSE) {install.packages(paste0(sourceModule,"RHTMLForms_0.6-0.tar.gz"), repos = NULL, type = "source")}
 
 
